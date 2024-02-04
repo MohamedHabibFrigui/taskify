@@ -15,10 +15,9 @@ export const useAction = <TInput, TOutput>(
   action: Action<TInput, TOutput>,
   options: UseActionOptions<TOutput> = {}
 ) => {
-  const [FieldErrors, setFieldErrors] = useState<
+  const [fieldErrors, setFieldErrors] = useState<
     FieldErrors<TInput> | undefined
   >(undefined);
-
   const [error, setError] = useState<string | undefined>(undefined);
   const [data, setData] = useState<TOutput | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,13 +28,12 @@ export const useAction = <TInput, TOutput>(
 
       try {
         const result = await action(input);
+
         if (!result) {
           return;
         }
 
-        if (result.fieldErrors) {
-          setFieldErrors(result.fieldErrors);
-        }
+        setFieldErrors(result.fieldErrors);
 
         if (result.error) {
           setError(result.error);
@@ -54,5 +52,11 @@ export const useAction = <TInput, TOutput>(
     [action, options]
   );
 
-  return { execute, FieldErrors, error, data, isLoading };
+  return {
+    execute,
+    fieldErrors,
+    error,
+    data,
+    isLoading,
+  };
 };
