@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs";
 import { InputType, ReturnType } from "./types";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { UpdateBoard } from "./schema";
+import { UpdateList } from "./schema";
 import { createSafeAction } from "@/lib/createSafeAction";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -16,14 +16,17 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  const { title, id } = data;
-  let board;
+  const { title, id, boardId } = data;
+  let list;
 
   try {
-    board = await db.board.update({
+    list = await db.list.update({
       where: {
         id,
-        orgId,
+        boardId,
+        board: {
+          orgId,
+        },
       },
       data: {
         title,
@@ -35,9 +38,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  revalidatePath(`/board/${id}`);
+  revalidatePath(`/board/${boardId}`);
 
-  return { data: board };
+  return { data: list };
 };
 
-export const updateBoard = createSafeAction(UpdateBoard, handler);
+export const updateList = createSafeAction(UpdateList, handler);
