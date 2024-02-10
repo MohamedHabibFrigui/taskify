@@ -1,6 +1,6 @@
 "use client";
 
-import CardModal from "@/modals/cardModal";
+import CardModal from "@/components/modals/cardModal";
 import { useEffect, useState } from "react";
 
 const ModalProvider = () => {
