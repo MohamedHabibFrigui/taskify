@@ -7,7 +7,7 @@ import {
   PopoverClose,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-action";
-import { createBoard } from "@/actions/createBoard";
+import { createBoard } from "@/actions/create-board";
 import FormInput from "./FormInput";
 import FormSubmit from "./FormSubmit";
 import { Button } from "@/components/ui/button";
